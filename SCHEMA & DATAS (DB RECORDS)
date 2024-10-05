@@ -1,0 +1,70 @@
+CREATE TABLE Customers (
+CustomerID INT PRIMARY KEY,
+FullName VARCHAR(100),
+Email VARCHAR(100),
+PhoneNumber VARCHAR(15)
+);
+CREATE TABLE Concerts (
+ConcertID INT PRIMARY KEY,
+ConcertName VARCHAR(100),
+ConcertDate DATE,
+Venue VARCHAR(100)
+);
+CREATE TABLE Seats (
+SeatID INT PRIMARY KEY,
+SeatNumber VARCHAR(10),
+ConcertID INT,
+FOREIGN KEY (ConcertID) REFERENCES Concerts(ConcertID)
+);
+CREATE TABLE Tickets (
+TicketID INT PRIMARY KEY,
+CustomerID INT,
+ConcertID INT,
+SeatID INT,
+PurchaseDate DATE,
+FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID),
+FOREIGN KEY (ConcertID) REFERENCES Concerts(ConcertID),
+FOREIGN KEY (SeatID) REFERENCES Seats(SeatID)
+);
+CREATE TABLE Payments (
+PaymentID INT PRIMARY KEY,
+TicketID INT,
+PaymentDate DATE,
+Amount DECIMAL(10, 2),
+PaymentMethod VARCHAR(50),
+FOREIGN KEY (TicketID) REFERENCES Tickets(TicketID)
+);
+SQL QUERY FOR INSERTING RECORDS IN TABLE
+INSERT INTO Customers (CustomerID, FullName, Email, PhoneNumber)
+VALUES
+(1, 'Lorah Hernandez', 'lorsjynhernandez@gmail.com', '09608717123'),
+(2, 'Rojean Untalan', 'jeanuntalan@gmail.com', '09987612344'),
+(3, 'Janimah Abdul', 'janimsabdul@gmail.com', '09770203121'),
+(4, 'Marithei Villanueva', 'theivillanueva@gmail.com', '09316654201'),
+(5, 'Angelique Campo', 'geliccampo@gmail.com', '09283116472');
+INSERT INTO Concerts (ConcertName, ConcertDate, Venue)
+VALUES
+(1, 'BTS 2021 Muster Sowoozoo', '2024-10-25', 'Seoul Olympic Stadium'),
+(2, 'Sweetener World Tour', '2024-10-22', 'Hard Rock Stadium'),
+(3, 'BTS Permission to Dance On Stage—LA', '2024-10-29', 'SoFi Stadium');
+INSERT INTO Seats (SeatID, SeatNumber, ConcertID)
+VALUES
+(1, 'A1', 1),
+(2, 'A2', 1),
+(3, 'B1', 2),
+(4, 'B2', 2),
+(5, 'C1', 3);
+INSERT INTO Tickets (TicketID, CustomerID, ConcertID, SeatID, PurchaseDate)
+VALUES
+(1, 1, 1, 1, '2024-08-01'),
+(2, 2, 2, 3, '2024-08-02'),
+(3, 3, 1, 2, '2024-08-03'),
+(4, 4, 3, 5, '2024-08-04'),
+(5, 5, 2, 4, '2024-08-05');
+INSERT INTO Payments (PaymentID, TicketID, PaymentDate, Amount, PaymentMethod)
+VALUES
+(1, 1, '2024-09-01', 13000.00, 'Credit Card'),
+(2, 2, '2024-09-02', 10000.00, 'PayPal'),
+(3, 3, '2024-09-03', 18000.00, 'Cash'),
+(4, 4, '2024-09-04', 8000.00, 'Credit Card'),
+(5, 5, '2024-09-05', 23000.00, 'Gcash');
